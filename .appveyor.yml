@@ -14,5 +14,6 @@ build_script:
 - security unlock-keychain -p "$psw" build.keychain
 - security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
 - 'security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$psw" build.keychain'
+- /usr/bin/codesign --force -s "<identity-id>" ./path/to/you/app -v
 
 test: off
