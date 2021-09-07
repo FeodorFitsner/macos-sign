@@ -9,6 +9,10 @@ environment:
 build_script:
 - echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
 - psw=`cat /usr/local/var/appveyor/build-agent/psw`
-- echo "$psw"
+- security create-keychain -p "$psw" build.keychain
+- security default-keychain -s build.keychain
+- security unlock-keychain -p "$psw" build.keychain
+- security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
+- 'security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$psw" build.keychain'
 
 test: off
