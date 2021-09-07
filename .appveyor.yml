@@ -8,5 +8,7 @@ environment:
 
 build_script:
 - echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
+- psw=`cat /usr/local/var/appveyor/build-agent/psw`
+- echo "$psw"
 
 test: off
